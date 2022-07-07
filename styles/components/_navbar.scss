@@ -1,0 +1,64 @@
+.navbar__container {
+
+    background-color: $color-primary;
+
+    padding: 0 10rem;
+    .navbar {
+
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        .navbar__logo {
+
+            a {
+                text-decoration: none;
+            }
+        }
+
+        .nav__links {
+
+            display: flex;
+
+           
+            .register {
+               
+                a {
+
+                    font-size: $default-font-size;
+                    text-decoration: none;
+                    color: $color-white;
+                }
+                margin-left: 5rem;
+            }
+
+            .login {
+
+                a {
+
+                    
+
+                        font-size: $default-font-size;
+                        text-decoration: none;
+                        color: $color-white;
+                    
+                }
+
+            }
+
+            .logout {
+
+                p {
+                    color: white;
+                    font-size: 1.6rem;
+                    margin-left: 5rem;
+
+                    &:hover {
+
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+    }
+}

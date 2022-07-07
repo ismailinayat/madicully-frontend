@@ -1,0 +1,25 @@
+
+.checkauth__button {
+    margin-top: 3rem;
+    margin-left: 3rem;
+
+    h3 {
+
+        font-size: 2rem;
+    }
+}
+
+.video__button {
+
+    margin-top: 3rem;
+    margin-left: 3rem;
+}
+@import './abstracts/variables';
+
+@import './base/base';
+
+@import './components/button';
+@import './components/form';
+@import './components/navbar';
+
+@import './pages/form-page'
