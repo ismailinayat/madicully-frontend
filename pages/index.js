@@ -21,9 +21,10 @@ export default function Home() {
 
     
     if (user) {
-      
-      const url = 'http://localhost:8000/api/v1/users/'
-      token = await auth.currentUser.getIdToken(true)
+      console.log(user)
+      const url = 'http://localhost:8000/api/v1/users/';
+
+      token = await auth.currentUser.getIdToken(true);
 
       try {
 
@@ -82,6 +83,8 @@ export default function Home() {
 
         <div className="upload__button">
           <input type="file" accept="video/mp4,video/x-m4v,video/*" onChange={(e) => onFileChange(e)} />
+          <h1>Above button will open the explorer allowing us to choose a video file. Once the file is choosen, a handler function is triggered, which first sends the request to backend to verify the user credentials
+            and then it uplaods the file to S3 bucket</h1>
         </div>
       </main>
     </div>

@@ -36,6 +36,17 @@ function Register() {
             console.log(err)
         })
         
+/*
+        try {
+            const newUser = await axios.post('http://localhost:8000/api/v1/users/create', {email, password})
+
+            console.log(newUser)
+
+            createUserWithEmailAndPassword(auth, uid: newUser.data.data._id, email, password);
+        } catch (error) {
+            console.log(error)
+        }
+*/
     }
     return (
     <div className='form-page'>
