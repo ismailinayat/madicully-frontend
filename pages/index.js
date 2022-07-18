@@ -1,13 +1,22 @@
 import axios from 'axios';
 import Head from 'next/head'
 import Image from 'next/image'
-import {useState} from 'react';
+import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useState, useEffect} from 'react';
 import styles from '../styles/Home.module.scss'
 import {auth} from '../firebase';
 import { onAuthStateChanged } from '@firebase/auth';
 
+import { loadStripe } from '@stripe/stripe-js';
+const stripe = loadStripe('pk_test_51LMmXEH4L0tNgZmvdfR3oCoZgu0yJb5pXviEPNMCu3uNdpylncfzKWYcUk7FD9HkSjFut1eQG8HjbzkFDiqbeiAh00KGI2Y42W');
+
+
+//console.log(stripe)
+
 export default function Home() {
 
+  const router = useRouter();
 
   const [user, setUser] = useState('')
   const [file, setFile] = useState(null)
@@ -22,7 +31,7 @@ export default function Home() {
     
     if (user) {
       console.log(user)
-      const url = 'http://localhost:8000/api/v1/users/';
+      const url = 'http://localhost:8000/api/v1/users/profile';
 
       token = await auth.currentUser.getIdToken(true);
 
@@ -66,6 +75,70 @@ export default function Home() {
     
   }
 
+  const buyMMI = async (e) => {
+
+    try {
+      let token = await auth.currentUser.getIdToken(true);
+      const session = await axios(
+        `http://127.0.0.1:8000/api/v1/bookings/checkout-session/mmi`, {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+
+      console.log(session.data.data.url)
+
+      router.push(session.data.data.url)
+    } catch (err) {
+      console.log(err)
+
+    }
+
+  }
+
+  const buyTraditional = async (e) => {
+
+    try {
+      let token = await auth.currentUser.getIdToken(true);
+      const session = await axios(
+        `http://127.0.0.1:8000/api/v1/bookings/checkout-session/traditional`, {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+
+      console.log(session.data.data.url)
+
+      router.push(session.data.data.url)
+    } catch (err) {
+      console.log(err)
+
+    }
+
+  }
+
+  useEffect( () => {
+
+    const createBooking = async () => {
+
+      const {interview, user, price} = (router.query);
+      
+      let booking;
+      if (interview && user && price) {
+  
+        booking = await axios(`http://127.0.0.1:8000/api/v1/bookings/create-booking?interview=${interview}&user=${user}&price=${price}`)
+  
+        
+      }
+
+      if (booking) router.push('/')
+    }
+
+    createBooking()
+    
+  })
 
   return (
     <div className={styles.container}>
@@ -85,6 +158,23 @@ export default function Home() {
           <input type="file" accept="video/mp4,video/x-m4v,video/*" onChange={(e) => onFileChange(e)} />
           <h1>Above button will open the explorer allowing us to choose a video file. Once the file is choosen, a handler function is triggered, which first sends the request to backend to verify the user credentials
             and then it uplaods the file to S3 bucket</h1>
+        </div>
+
+
+        <div className="payment">
+
+          
+          <div className="mmi" onClick={buyMMI}>
+            <Link href="">
+              <a>Buy MMI <span>$50/-</span></a>
+            </Link>
+          </div>
+
+          <div className="traditional" onClick={buyTraditional}>
+            <Link href="">
+              <a>Buy Traditional <span>$30/-</span></a>
+            </Link>
+          </div>
         </div>
       </main>
     </div>
