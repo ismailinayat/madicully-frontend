@@ -7,6 +7,7 @@ import {useState, useEffect} from 'react';
 import styles from '../styles/Home.module.scss'
 import {auth} from '../firebase';
 import { onAuthStateChanged } from '@firebase/auth';
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { loadStripe } from '@stripe/stripe-js';
 const stripe = loadStripe('pk_test_51LMmXEH4L0tNgZmvdfR3oCoZgu0yJb5pXviEPNMCu3uNdpylncfzKWYcUk7FD9HkSjFut1eQG8HjbzkFDiqbeiAh00KGI2Y42W');
@@ -20,6 +21,10 @@ export default function Home() {
 
   const [user, setUser] = useState('')
   const [file, setFile] = useState(null)
+  const [text, setText] = useState('')
+
+
+  const { speak, cancel } = useSpeechSynthesis();
 
 
   //onAuthStateChanged(auth, (user) => setUser(user));                                    // This hangs the application whenever I use 'setState'.
@@ -174,6 +179,22 @@ export default function Home() {
             <Link href="">
               <a>Buy Traditional <span>$30/-</span></a>
             </Link>
+          </div>
+        </div>
+
+
+        <div className="text_to_speech">
+
+          <div className="text__container">
+
+            <textarea name="" id="" cols="30" rows="10" onChange={(e) => setText(e.target.value)}>
+
+            </textarea>
+          </div>
+
+          <div className="speech__btn">
+            <button onClick={() => speak({text: text})}>Click To Speak above text</button>
+            <button onClick={() => cancel()}>Click To Stop</button>
           </div>
         </div>
       </main>

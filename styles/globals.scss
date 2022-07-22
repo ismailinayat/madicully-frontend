@@ -35,6 +35,32 @@
         border-radius: 0.3rem;
     }
 }
+
+.text_to_speech {
+
+    margin-top: 10rem;
+    text-align: center;
+    .text__container {
+        
+                    max-width: 50rem;
+                    margin: 0 auto;
+
+        textarea {
+
+            width: 100%;
+        }
+    }
+
+    .speech__btn {
+
+        margin-top: 2rem;
+
+        button {
+
+            margin-right: 2rem;
+        }
+    }
+}
 @import './abstracts/variables';
 
 @import './base/base';
